@@ -1,12 +1,21 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
+	import { onMount } from "svelte";
 
 
     type LifeQuestLoginResponse = {
         grantType: string,
         accessToken: string,
         refreshToken: string
-    } 
+    }
+
+    onMount(async () => {
+        const accessToken = window.localStorage.getItem("accessToken");
+
+        if (accessToken != null){
+            goto("/service");
+        }
+    })
 
     // 로그인 요청시 보낼 값
     // DOM과 연동함

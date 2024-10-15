@@ -15,6 +15,7 @@
 
         if (response.status == 401) {
             loggedIn = false;
+            window.localStorage.removeItem('accessToken');
             goto('login');
         }
         if (response.status == 200) {
