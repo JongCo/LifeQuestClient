@@ -6,6 +6,9 @@
         title: string,
         id: string,
         owner: string,
+        createDateTime: Date,
+        modifiedDateTime: Date,
+        sortOrder: number
     };
 
     let loggedIn: boolean | null = null;
@@ -51,7 +54,14 @@
 
         const responseJson = await response.json();
         console.log(responseJson);
-        categories = responseJson.categories;
+        categories = responseJson.categories.map((item:any):Category => ({
+            title: item.title,
+            id: item.id,
+            createDateTime: new Date(item.createDateTime),
+            modifiedDateTime: new Date(item.modifiedDateTime),
+            owner: item.owner,
+            sortOrder: item.sortOrder
+        }));
     }
 
     async function createCategory(){
@@ -90,5 +100,5 @@
 
 <hr>
 {#each categories as category}
-    <p>title : {category.title} | id : {category.id} | owner : {category.owner}</p>
+    <p>title : {category.title} | id : {category.id} | owner : {category.owner} | dt : {category.createDateTime} | mt : {category.modifiedDateTime} | order : {category.sortOrder} </p>
 {/each}
